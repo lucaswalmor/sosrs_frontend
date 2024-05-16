@@ -1,38 +1,57 @@
 <template>
     <div id="header">
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">
-                    Nome do projeto
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Inicio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Buscar Pets</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Login</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+        <div class="">
+            <Menubar :model="items" />
+        </div>
     </div>
 </template>
 
 <script>
-export default {
+import Menubar from 'primevue/menubar';
 
+export default {
+    components: {
+        Menubar,
+    },
+    data() {
+        return {
+            items: [
+                {
+                    label: 'Início',
+                    icon: 'pi pi-home',
+                    command: () => {
+                        this.$router.push('/')
+                    }
+                },
+                {
+                    label: 'Encontre seu pet',
+                    icon: 'fa-solid fa-paw',
+                    command: () => {
+                        this.$router.push('/encontre-seu-pet')
+                    },
+                },
+                {
+                    label: 'Cadastre sua instituição',
+                    icon: 'pi pi-building',
+                    command: () => {
+                        this.$router.push('/cadastro')
+                    },
+                },
+                {
+                    label: 'Login',
+                    icon: 'pi pi-sign-in',
+                    command: () => {
+                        this.$router.push('/login')
+                    },
+                },
+            ]
+        }
+    }
 }
 </script>
 
 <style>
-
+a {
+    text-decoration: none !important;
+}
 </style>
