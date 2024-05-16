@@ -20,7 +20,7 @@
             </div>
         </div>
 
-        <div class="bg-dark d-flex flex-column text-light p-3 justify-content-center align-items-center">
+        <div class="bg-dark d-flex flex-column text-light p-3 justify-content-center align-items-center footer">
             <div class="col-md-12">
                 <div class="col-md-12 text-center mb-2">
                     Desenvolvido por <span class="fw-bold">Lucas Steinbach</span>
@@ -56,11 +56,23 @@ export default {
     .img-inicio {
         width: 700px        
     }
+
+    .footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
 }
 
 @media screen and (max-width: 500px) {
     .img-inicio {
         width: 300px        
+    }
+
+    .footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
     }
 }
 </style>
