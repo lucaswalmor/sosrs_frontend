@@ -21,7 +21,8 @@ import VueTheMask from 'vue-the-mask'
 // AXIOS
 import axios from 'axios';
 const axiosInstance = axios.create({
-    baseURL: 'http://127.0.0.1:8000/api/',
+    baseURL: 'https://sosrs.lksoftware.com.br/public/api/',
+    // baseURL: 'http://127.0.0.1:8000/api/',
 });
 
 const app = createApp(App)
