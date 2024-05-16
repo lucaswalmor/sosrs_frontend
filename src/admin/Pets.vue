@@ -1,26 +1,10 @@
 <template>
     <div id="instituicao">
-        <Header />
-        
         <div v-if="isLoading">
             <ProgressBar mode="indeterminate" style="height: 6px"></ProgressBar>
         </div>
 
-        <div class="container mt-4" v-else>
-            <div class="col-md-12 d-flex gap-3 align-items-center">
-                <div>
-                    <router-link to="/encontre-seu-pet" class="fw-bold fs-5">Instituições</router-link>
-                </div>
-                <div>
-                    <span class="text-secondary">>></span>
-                </div>
-                <div>
-                    <router-link to="" class="text-secondary fw-bold fs-5">Pets</router-link>
-                </div>
-            </div>
-            
-            <hr>
-
+        <div class="container mt-4 mb-4" v-else>
             <!-- botoes -->
             <div class="col-md-12 mt-3 d-flex flex-wrap gap-2 align-items-center mb-3">
                 <Button
@@ -40,44 +24,14 @@
                     v-if="tem_filtro"
                 />
             </div>
-
-            <div class="col-md-12">
-                <span class="fw-bold text-purple-700">DADOS DA INSTITUIÇÃO </span>
-            </div>
-            <div class="col-md-12">
-                <span class="fw-bold">Nome: </span> {{ instituicao.nome_instituicao }}
-            </div>
-            <div class="col-md-12">
-                <span class="fw-bold">Instagram: </span>
-                <span class="text-indigo-300 cursor-pointer" @click="linkInsta">
-                    <i class="fa-brands fa-instagram"></i>
-                    Enviar mensagem
-                </span>
-            </div>
-            <div class="col-md-12">
-                <span class="fw-bold">Whatsapp: </span>
-                <span class="text-primary cursor-pointer" @click="linkWpp">
-                    <i class="fa-brands fa-whatsapp"></i>
-                    Enviar mensagem
-                </span>
-            </div>
-            <div class="col-md-12">
-                <span class="fw-bold">Email: </span>
-                <span class="text-cyan-700 cursor-pointer" @click="copiarEmail">
-                    <i class="fa-solid fa-envelope"></i>
-                    Copiar email
-                </span>
-            </div>
-            <div class="col-md-12">
-                <span class="fw-bold">Endereço: </span> {{ instituicao.rua }}, {{ instituicao.numero }} {{ instituicao.bairro }} {{ instituicao.cidade }}-{{ instituicao.estado }} 
-            </div>
-
+            
             <hr>
 
             <div class="d-flex gap-2 mt-3">
                 <div class="card col-md-4" v-for="(pet, index) in pets" :key="index">
                     <div class="card-header text-center fw-bold text-secondary">
                         {{ pet.nome }}
+                        <i class="fa-solid fa-trash text-danger cursor-pointer" @click="excluirPet(pet.id)"></i>
                     </div>
                     <div class="card-body text-center">
                         <img :src="pet.foto" alt="instituicao_logo" style="width: 200px">
@@ -119,9 +73,12 @@
                     <div class="col-md-12 mt-2" v-if="petSelecionado.descricao != ''">
                         <span class="fw-bold">Descrição:</span> {{ petSelecionado.descricao }}
                     </div>
-                    <div class="col-md-12 mt-2" v-if="petSelecionado.status != ''">
-                        <span class="fw-bold me-2">Status:</span> 
-                        <Tag :severity="statusPetColor(petSelecionado.status)" value="Secondary">{{ petSelecionado.status }}</Tag>
+                    <div class="col-md-12 mt-2">
+                        <label for="status">Status</label><br>
+                        <span class="text-sm text-secondary">
+                            Ao alterar o status do pet ele atualizará automaticamente
+                        </span>
+                        <Dropdown v-model="petSelecionado.status" :options="['Aguardando', 'Adotado', 'Em processo de adoção']" placeholder="Selecione" class="w-full" @change="atualizarStatus" />
                     </div>
                 </div>
             </div>
@@ -183,6 +140,7 @@ import Button from 'primevue/button';
 import OverlayPanel from 'primevue/overlaypanel';
 import InputText from 'primevue/inputtext';
 import Dropdown from 'primevue/dropdown';
+import ProgressSpinner from 'primevue/progressspinner';
 
 export default {
     components: {
@@ -195,10 +153,12 @@ export default {
         OverlayPanel,
         InputText,
         Dropdown,
+        ProgressSpinner,
     },
     data() {
         return {
             isLoading: false,
+            isLoadingAtualizar: false,
             dialogPetSelecionado: false,
             tem_filtro: false,
             instituicao: {},
@@ -226,6 +186,7 @@ export default {
                 "Jabuti",
                 "Outro",
             ],
+            usuarioLogado: JSON.parse(localStorage.getItem('usuario')).usuario
         }
     },
     methods: {
@@ -255,7 +216,7 @@ export default {
             
             const parametros = `&nome=${this.filtros.nome}&especie=${this.filtros.especie}&porte=${this.filtros.porte}&pelagem=${this.filtros.pelagem}&raca=${this.filtros.raca}&status=${this.filtros.status}`;
 
-            this.axios.get(`pets/${this.$route.params.nome}?page=${page}${parametros}`).then(res => {
+            this.axios.get(`pets/${this.usuarioLogado.instituicao}?page=${page}${parametros}`).then(res => {
                 this.instituicao = res.data.instituicao
                 this.pets = res.data.pets
             }).catch(err => {
@@ -267,6 +228,9 @@ export default {
         verPet(pet) {
             this.petSelecionado = pet;
             this.dialogPetSelecionado = true;
+        },
+        statusPet(status) {
+
         },
         statusPetColor(status) {
             var color = '';
@@ -305,6 +269,53 @@ export default {
         copiarEmail() {
             navigator.clipboard.writeText(this.instituicao.email);
             this.$toast.add({ severity: 'success', summary: 'Copiado', detail: 'Email copiado com sucesso!', life: 3000 });
+        },
+        atualizarStatus() {
+            const dados = {
+                id: this.petSelecionado.id,
+                status: this.petSelecionado.status,
+            }
+
+            this.axios.put(`atualizar-status-pet`, dados, {
+                headers: {
+                    'Authorization': `Bearer ${this.usuarioLogado.token}`
+                }
+            }).then(res => {
+                if (res.status == 200) {
+                    this.$swal({
+                        position: "top-end",
+                        icon: "success",
+                        title: res.data.success,
+                        showConfirmButton: false,
+                        timer: 3500
+                    });
+
+                    this.buscarPets();
+                }
+            }).catch(err => {
+                console.log(err)
+            })
+        },
+        excluirPet(id) {
+            this.axios.delete(`excluir-pet/${id}`, {
+                headers: {
+                    'Authorization': `Bearer ${this.usuarioLogado.token}`
+                }
+            }).then(res => {
+                if (res.status == 200) {
+                    this.$swal({
+                        position: "top-end",
+                        icon: "success",
+                        title: res.data.success,
+                        showConfirmButton: false,
+                        timer: 3500
+                    });
+
+                    this.buscarPets();
+                }
+            }).catch(err => {
+                console.log(err)
+            })
         },
     },
     mounted() {

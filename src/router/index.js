@@ -39,6 +39,11 @@ const routes = [
         name: 'cadastrar-pet',
         component: () => import('@/admin/FormNovoPet')
       },
+      {
+        path: 'pets',
+        name: 'pets',
+        component: () => import('@/admin/Pets')
+      },
     ]
   },
 ]

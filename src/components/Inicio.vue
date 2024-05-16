@@ -11,7 +11,7 @@
                 <h4>Parceiros</h4>
             </div>
 
-            <div class="col-md-12 justify-content-center d-flex gap-3 mb-3">
+            <div class="col-md-12 justify-content-center d-flex gap-3 mb-3 flex-wrap">
                 <img :src="require('@/assets/img/psicoprontuarios.png')" alt="psico_prontuarios" style="width: 150px">
                 <img :src="require('@/assets/img/znc.png')" alt="psico_prontuarios" style="width: 150px">
             </div>

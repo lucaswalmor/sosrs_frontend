@@ -13,11 +13,11 @@
                 </div>
             </div>
 
-            <!-- <div class="row mt-3">
+            <div class="row mt-3">
                 <div class="card p-4 fw-bold text-primary" @click="listaPets">
                     Ver PETS cadastrados
                 </div>
-            </div> -->
+            </div>
 
             <div class="row mt-4">
                 <router-view></router-view>
@@ -38,7 +38,7 @@ export default {
             this.$router.push({name: 'cadastrar-pet'});
         },
         listaPets() {
-            this.$router.push('/pets')
+            this.$router.push({name: 'pets'})
         }
     }
 
