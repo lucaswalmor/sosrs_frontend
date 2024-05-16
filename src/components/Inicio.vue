@@ -25,7 +25,7 @@
 
                 <div class="col-md-12 justify-content-center d-flex gap-3">
                     <i class="fa-brands fa-instagram" @click="instagram"></i>
-                    <i class="fa-brands fa-whatsapp"></i>
+                    <i class="fa-brands fa-whatsapp" @click="whatsapp"></i>
                 </div>
             </div>
         </div>
