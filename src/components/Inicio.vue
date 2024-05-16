@@ -1,5 +1,9 @@
 <template>
     <div id="inicio">
+        <div class="col-md-12 container text-center">
+            <span class="text-secondary">Sistema feito as pressas, qualquer bug porfavor relatar no whatsapp no rodapé da pagina</span>
+        </div>
+
         <div class="col-md-12 gap-3 justify-content-center flex-wrap p-3">
             <div class="col shadow rounded d-flex justify-content-center align-items-center ">
                 <img :src="require('@/assets/img/sos_rs.jpg')" alt="sosrs" class="img-inicio">
