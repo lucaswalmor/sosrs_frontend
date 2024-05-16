@@ -2,7 +2,7 @@
   <div class="home">
     <Header />
 
-    <div class="container mt-4">
+    <div class="container-fluid p-0 mt-4">
       <Inicio />
     </div>
   </div>
