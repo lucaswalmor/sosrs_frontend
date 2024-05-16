@@ -23,7 +23,7 @@
 
             <div class="col-md-4 mt-3">
                 <label for="pelagem">Pelagem</label>
-                <Dropdown v-model="dados.pelagem" :options="['Alta', 'Mádia', 'Baixa', 'Sem Pelagem']" placeholder="Selecione" class="w-full" />
+                <Dropdown v-model="dados.pelagem" :options="['Alta', 'Média', 'Baixa', 'Sem Pelagem']" placeholder="Selecione" class="w-full" />
             </div>
 
             <div class="col-md-4 mt-3">

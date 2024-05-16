@@ -21,6 +21,27 @@
             
             <hr>
 
+            <div class="col-md-12">
+                <span class="fw-bold">Dados da instituição </span>
+            </div>
+            <div class="col-md-12">
+                <span class="fw-bold">Nome: </span> {{ instituicao.nome_instituicao }}
+            </div>
+            <div class="col-md-12">
+                <span class="fw-bold">Instagram: </span> {{ instituicao.instagram }}
+            </div>
+            <div class="col-md-12">
+                <span class="fw-bold">Whatsapp: </span> {{ instituicao.whatsapp }}
+            </div>
+            <div class="col-md-12">
+                <span class="fw-bold">Email: </span> {{ instituicao.email }}
+            </div>
+            <div class="col-md-12">
+                <span class="fw-bold">Endereço: </span> {{ instituicao.rua }}, {{ instituicao.numero }} {{ instituicao.bairro }} {{ instituicao.cidade }}-{{ instituicao.estado }} 
+            </div>
+
+            <hr>
+
             <div class="d-flex gap-2 mt-3">
                 <div class="card col-md-4" v-for="(pet, index) in pets" :key="index">
                     <div class="card-header text-center fw-bold text-secondary">
@@ -30,7 +51,7 @@
                         <img :src="pet.foto" alt="instituicao_logo" style="width: 200px">
                     </div>
                     <div class="card-footer text-center bg-dark text-light fw-bold cursor-pointer" @click="verPet(pet)">
-                        <span class="text-light">Ver mais</span>
+                        <span class="text-light">Informações</span>
                     </div>
                 </div>
             </div>
@@ -93,7 +114,7 @@ export default {
         return {
             isLoading: false,
             dialogPetSelecionado: false,
-            instituicao: null,
+            instituicao: {},
             pets: [],
             petSelecionado: {}
         }

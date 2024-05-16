@@ -4,9 +4,6 @@
             <div class="col shadow rounded d-flex justify-content-center align-items-center ">
                 <img :src="require('@/assets/img/sos_rs.jpg')" alt="sosrs" class="img-inicio">
             </div>
-            <!-- <div class="col sobre-container shadow rounded d-flex justify-content-center align-items-center">
-                Somos uma iniciativa afim de restaurar a união de pets perdidos nas enchentes do RS com seus famíliares
-            </div> -->
         </div>
 
         <div class="col-md-12 mt-2">
@@ -16,7 +13,7 @@
 
             <div class="col-md-12 justify-content-center d-flex gap-3 mb-3">
                 <img :src="require('@/assets/img/psicoprontuarios.png')" alt="psico_prontuarios" style="width: 150px">
-                <img :src="require('@/assets/img/znc.jpg')" alt="psico_prontuarios" style="width: 150px">
+                <img :src="require('@/assets/img/znc.png')" alt="psico_prontuarios" style="width: 150px">
             </div>
         </div>
 
