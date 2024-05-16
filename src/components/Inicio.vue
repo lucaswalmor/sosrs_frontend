@@ -24,7 +24,7 @@
                 </div>
 
                 <div class="col-md-12 justify-content-center d-flex gap-3">
-                    <i class="fa-brands fa-instagram"></i>
+                    <i class="fa-brands fa-instagram" @click="instagram"></i>
                     <i class="fa-brands fa-whatsapp"></i>
                 </div>
             </div>
@@ -38,6 +38,14 @@ export default {
     },
     data() {
         return {
+        }
+    },
+    methods: {
+        instagram() {
+            window.open('https://www.instagram.com/lucassteinbach/', '_blank');
+        },
+        whatsapp() {
+            window.open('https://wa.me/5534992021394', '_blank');
         }
     }
 }
